@@ -1,15 +1,29 @@
 console.log("Welcome to Mother Russia, comrade.");
 
-let bullet = Math.round(Math.random() * 7);
+let bullet = Math.round(Math.random() * 6);
 let activeBullet = 1;
 let activePlayer = 0;
-let realActivePlayer = 1;
 let deathCounter = 0;
 let living = [true, true, true, true];
 const fire = document.getElementById("gun");
 const feedback = document.getElementById("feedback");
-
+const resetBtn = document.getElementById("reset");
 //functions
+
+function reset() {
+  for (let i = 0; i < living.length; i++) {
+    living[i] = true;
+    document.getElementById(`player${i}`).textContent = `${i + 1}-Alive`;
+  }
+  bullet = Math.round(Math.random() * 6);
+  activeBullet = 1;
+  deathCounter = 0;
+  activePlayer = 0;
+  feedback.textContent = ` `;
+  document.getElementById("player").textContent = `Playing: ${
+    activePlayer + 1
+  }`;
+}
 
 function nextPlayer() {
   if (activePlayer < 3) {
@@ -29,6 +43,9 @@ function nextPlayer() {
       activePlayer = 0;
     }
   }
+  document.getElementById("player").textContent = `Playing: ${
+    activePlayer + 1
+  }`;
 }
 
 function death() {
@@ -37,10 +54,6 @@ function death() {
   }-Dead`;
   deathCounter++;
   living[activePlayer] = false;
-}
-
-function load() {
-  bullet = Math.round(Math.random() * 7);
 }
 
 function shoot() {
@@ -52,8 +65,8 @@ function shoot() {
     if (activeBullet === bullet) {
       feedback.textContent = `BAM! Player ${activePlayer + 1} is dead!`;
       death();
-      load();
       nextPlayer();
+      bullet = Math.round(Math.random() * 6);
     } else {
       feedback.textContent = `CLICK! Player ${
         activePlayer + 1
@@ -66,8 +79,12 @@ function shoot() {
   }
 }
 
-//Button
+//Buttons
 
 fire.addEventListener("click", function () {
   shoot();
+});
+
+resetBtn.addEventListener("click", function () {
+  reset();
 });

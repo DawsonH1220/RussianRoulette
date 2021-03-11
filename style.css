@@ -8,3 +8,7 @@ img {
 #gun {
   padding: 2%;
 }
+#reset {
+  padding: 2%;
+  float: right;
+}
